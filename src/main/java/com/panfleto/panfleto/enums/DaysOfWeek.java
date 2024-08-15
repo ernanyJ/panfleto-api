@@ -1,4 +1,4 @@
-package com.panfleto.panfleto.utils;
+package com.panfleto.panfleto.enums;
 
 public enum DaysOfWeek {
     MONDAY,

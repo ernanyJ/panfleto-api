@@ -1,8 +1,7 @@
-package com.panfleto.panfleto.services;
+package com.panfleto.panfleto.services.s3;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
 
 public interface S3Service {
