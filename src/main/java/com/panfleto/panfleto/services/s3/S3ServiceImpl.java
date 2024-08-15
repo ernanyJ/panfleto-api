@@ -23,8 +23,11 @@ public class S3ServiceImpl implements S3Service {
 
     final S3ClientConfig s3ClientConfig;
 
-    public S3ServiceImpl(S3ClientConfig s3ClientConfig) {
+    final S3Client s3Client;
+
+    public S3ServiceImpl(S3ClientConfig s3ClientConfig, S3Client s3Client) {
         this.s3ClientConfig = s3ClientConfig;
+        this.s3Client = s3ClientConfig.createS3Client();
     }
 
     @Override
@@ -64,8 +67,7 @@ public class S3ServiceImpl implements S3Service {
 
         File image = convertMultipartFileToFile(file);
 
-        try (S3Client s3Client = s3ClientConfig.createS3Client()) {
-
+        try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder().bucket(bucket).key(key).build();
             PutObjectResponse response = s3Client.putObject(putObjectRequest, RequestBody.fromFile(image));
 
