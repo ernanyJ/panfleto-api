@@ -1,13 +1,12 @@
 package com.panfleto.panfleto.services.s3;
 
 import com.panfleto.panfleto.config.S3ClientConfig;
-import com.panfleto.panfleto.utils.FormatKey;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
-import com.panfleto.panfleto.utils.IsImageFile;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ import static com.panfleto.panfleto.utils.MultipartToFile.convertMultipartFileTo
 
 
 @Service
+@Profile("prod")
 public class S3ServiceImpl implements S3Service {
 
     final S3ClientConfig s3ClientConfig;
