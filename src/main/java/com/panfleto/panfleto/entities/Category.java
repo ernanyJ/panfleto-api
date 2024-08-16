@@ -1,5 +1,6 @@
 package com.panfleto.panfleto.entities;
 
+import com.panfleto.panfleto.enums.Categories;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,6 +13,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @Enumerated(EnumType.STRING)
+    private Categories category;
 
 }

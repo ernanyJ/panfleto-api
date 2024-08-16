@@ -23,4 +23,6 @@ public class Product {
     @OneToMany
     private List<Category> categories;
 
+    private double price;
+
 }
