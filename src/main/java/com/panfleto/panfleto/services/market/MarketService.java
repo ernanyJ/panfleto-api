@@ -2,6 +2,7 @@ package com.panfleto.panfleto.services.market;
 
 
 import com.panfleto.panfleto.entities.Market;
+import com.panfleto.panfleto.entities.Offer;
 
 import java.util.List;
 
@@ -15,5 +16,9 @@ public interface MarketService {
     void updateMarket(Market market);
 
     void deleteMarket(Long id);
+
+    void addOffer(Long id, Offer offer);
+
+    void removeOffer(Long marketId, Long offerId);
 
 }

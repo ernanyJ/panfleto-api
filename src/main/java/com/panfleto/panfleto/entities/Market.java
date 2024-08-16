@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -30,4 +28,22 @@ public class Market {
 
     @OneToMany(cascade = CascadeType.ALL)
     List<WorkingDays> workingDays;
+
+
+    @OneToMany(orphanRemoval = true)
+    List<Offer> offers;
+
+    public void addOffers(Offer offer) {
+        this.offers.add(offer);
+    }
+
+    public void removeOffer(Long id) {
+        for (Offer offer : offers) {
+            if (offer.getId().equals(id)) {
+                offers.remove(offer);
+                break;
+            }
+        }
+    }
+
 }
