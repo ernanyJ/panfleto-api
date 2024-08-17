@@ -1,6 +1,7 @@
 package com.panfleto.panfleto.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.panfleto.panfleto.enums.Category;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,7 +25,8 @@ public class Offer {
     @JsonIgnore
     private Market market;
 
-    @OneToMany
+    @ElementCollection(targetClass = Category.class)
+    @Enumerated(EnumType.STRING)
     private List<Category> includedCategories;
 
     @OneToMany

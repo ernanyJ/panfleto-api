@@ -1,8 +1,7 @@
 package com.panfleto.panfleto.DTOs;
 
-import com.panfleto.panfleto.entities.Category;
-import com.panfleto.panfleto.entities.Market;
 import com.panfleto.panfleto.entities.Product;
+import com.panfleto.panfleto.enums.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

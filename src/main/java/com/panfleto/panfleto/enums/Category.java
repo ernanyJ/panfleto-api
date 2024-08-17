@@ -1,6 +1,6 @@
 package com.panfleto.panfleto.enums;
 
-public enum Categories {
+public enum Category {
         HYGIENE,
         FOOD,
         ELECTRONICS

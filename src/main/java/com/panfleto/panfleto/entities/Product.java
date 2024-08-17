@@ -1,6 +1,7 @@
 package com.panfleto.panfleto.entities;
 
 
+import com.panfleto.panfleto.enums.Category;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,7 +21,8 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany
+    @ElementCollection(targetClass = Category.class)
+    @Enumerated(EnumType.STRING)
     private List<Category> categories;
 
     private double price;
