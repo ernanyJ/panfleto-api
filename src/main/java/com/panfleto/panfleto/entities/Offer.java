@@ -35,4 +35,5 @@ public class Offer {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
 }

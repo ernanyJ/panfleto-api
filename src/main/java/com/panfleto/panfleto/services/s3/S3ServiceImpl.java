@@ -31,32 +31,6 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public List<String> listObjects(String bucket) {
-        List<String> objectKeys;
-        ListObjectsResponse listObjectsResponse;
-        try (S3Client s3Client = s3ClientConfig.createS3Client()) {
-
-            objectKeys = new ArrayList<>();
-
-            ListObjectsRequest listObjectsRequest = ListObjectsRequest.builder().bucket(bucket).build();
-
-            listObjectsResponse = s3Client.listObjects(listObjectsRequest);
-        }
-
-        for (S3Object s3Object : listObjectsResponse.contents()) {
-            objectKeys.add(s3Object.key());
-        }
-        return objectKeys;
-    }
-
-    @Override
-    public String getObjectUrl(String key) {
-        String endpoint = System.getenv("PUB_URL");
-        return endpoint + "/" + key;
-    }
-
-
-    @Override
     public String uploadObject(String bucket, String key, MultipartFile file) throws IllegalArgumentException {
 
         key = NormalizeKey(key);
@@ -70,7 +44,6 @@ public class S3ServiceImpl implements S3Service {
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder().bucket(bucket).key(key).build();
             PutObjectResponse response = s3Client.putObject(putObjectRequest, RequestBody.fromFile(image));
-
         } catch (S3Exception e) {
             throw new RuntimeException("Failed to upload object to S3: " + e.getMessage(), e);
         } finally {

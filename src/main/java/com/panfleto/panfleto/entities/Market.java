@@ -29,8 +29,7 @@ public class Market {
     @OneToMany(cascade = CascadeType.ALL)
     List<WorkingDays> workingDays;
 
-
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, mappedBy = "market")
     List<Offer> offers;
 
     public void addOffers(Offer offer) {
