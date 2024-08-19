@@ -41,16 +41,10 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-
-    // TODO refactoring all controller classes and make an entity constructor that convert dto to entity
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDto object, MultipartFile file) {
-        Product product = new Product();
-        String url = s3.uploadObject("supermarket-images", object.getName(), file);
-
-        product.setName(object.getName());
-        product.setPrice(object.getPrice());
-        product.setCategories(object.getCategories());
+    public ResponseEntity<Product> createProduct(@RequestParam JSONObject object, MultipartFile file) {
+        Product product = new Product(object);
+        String url = s3.uploadObject("products-images", object.getString("name"), file);
         product.setImgUrl(url);
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(product));
     }

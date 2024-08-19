@@ -1,6 +1,7 @@
 package com.panfleto.panfleto.entities;
 
 
+import com.panfleto.panfleto.DTOs.ProductDto;
 import com.panfleto.panfleto.enums.Category;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -33,11 +34,23 @@ public class Product {
     public Product(JSONObject object) {
         this.setName(object.getString("name"));
         this.setPrice(object.getDouble("price"));
-        this.setImgUrl(object.getString("imgUrl"));
         JSONArray categories = object.getJSONArray("categories");
         this.categories = new ArrayList<>();
 
         for (Object item : categories) {
+            this.categories.add(Category.valueOf(item.toString()));
+        }
+
+    }
+
+    public Product(ProductDto object) {
+        this.setName(object.getName());
+        this.setPrice(object.getPrice());
+        this.setImgUrl(object.getImgurl());
+        List<Category> list = object.getCategories();
+        this.categories = new ArrayList<>();
+
+        for (Object item : list) {
             this.categories.add(Category.valueOf(item.toString()));
         }
 
