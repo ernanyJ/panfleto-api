@@ -17,5 +17,6 @@ public interface OfferService {
 
     Offer offerFromDto(OfferDto object);
 
+    void addProductToOffer(Long offerId, List<Long> productId);
 
 }

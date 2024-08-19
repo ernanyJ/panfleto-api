@@ -2,9 +2,9 @@ package com.panfleto.panfleto.services.offer;
 
 
 import com.panfleto.panfleto.DTOs.OfferDto;
-import com.panfleto.panfleto.entities.Market;
 import com.panfleto.panfleto.entities.Offer;
 import com.panfleto.panfleto.repositories.OfferRepository;
+import com.panfleto.panfleto.repositories.ProductRepository;
 import com.panfleto.panfleto.services.market.MarketService;
 
 import org.springframework.stereotype.Service;
@@ -16,11 +16,13 @@ import java.util.Optional;
 public class OfferServiceImpl implements OfferService {
 
     private final OfferRepository offerRepository;
-    private MarketService marketService;
+    private final MarketService marketService;
+    private final ProductRepository productRepository;
 
-    public OfferServiceImpl(OfferRepository offerRepository, MarketService marketService) {
+    public OfferServiceImpl(OfferRepository offerRepository, MarketService marketService, ProductRepository productRepository) {
         this.offerRepository = offerRepository;
         this.marketService = marketService;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -66,5 +68,12 @@ public class OfferServiceImpl implements OfferService {
         offer.setTitle(object.getTitle());
         offer.setIncludedCategories(object.getIncludedCategories());
         return offer;
+    }
+
+    @Override
+    public void addProductToOffer(Long offerId, List<Long> productId) {
+        Offer offer = getOfferById(offerId);
+        productId.forEach(id -> offer.addProduct(productRepository.findById(id).orElse(null)));
+        offerRepository.save(offer);
     }
 }

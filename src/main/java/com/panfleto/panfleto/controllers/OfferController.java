@@ -46,4 +46,11 @@ public class OfferController {
         return ResponseEntity.ok().body(offerService.updateOffer(id, offer));
     }
 
+    @PutMapping("/addProduct/{offerId}")
+    public ResponseEntity<Void> addProductToOffer(@PathVariable Long offerId, @RequestBody List<Long> productsId) {
+
+        offerService.addProductToOffer(offerId, productsId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

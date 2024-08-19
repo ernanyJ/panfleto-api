@@ -36,4 +36,8 @@ public class Offer {
 
     private LocalDate endDate;
 
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
+
 }
