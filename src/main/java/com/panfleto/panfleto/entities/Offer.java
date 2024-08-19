@@ -1,7 +1,9 @@
 package com.panfleto.panfleto.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.panfleto.panfleto.DTOs.OfferDto;
 import com.panfleto.panfleto.enums.Category;
+import com.panfleto.panfleto.services.market.MarketService;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -36,8 +38,21 @@ public class Offer {
 
     private LocalDate endDate;
 
+    public Offer(OfferDto object, MarketService marketService) {
+        this.setMarket(marketService.getMarket(object.getMarketId()));
+        this.setStartDate(object.getStartDate());
+        this.setDescription(object.getDescription());
+        this.setEndDate(object.getEndDate());
+        this.setImageUrl(object.getImageUrl());
+        this.setTitle(object.getTitle());
+        this.setIncludedCategories(object.getIncludedCategories());
+    }
+
+    public Offer() {
+
+    }
+
     public void addProduct(Product product) {
         this.products.add(product);
     }
-
 }

@@ -6,7 +6,6 @@ import com.panfleto.panfleto.entities.Offer;
 import com.panfleto.panfleto.repositories.OfferRepository;
 import com.panfleto.panfleto.repositories.ProductRepository;
 import com.panfleto.panfleto.services.market.MarketService;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,18 +56,6 @@ public class OfferServiceImpl implements OfferService {
         offerRepository.deleteById(offerID);
     }
 
-    @Override
-    public Offer offerFromDto(OfferDto object) {
-        Offer offer = new Offer();
-        offer.setMarket(marketService.getMarket(object.getMarketId()));
-        offer.setStartDate(object.getStartDate());
-        offer.setDescription(object.getDescription());
-        offer.setEndDate(object.getEndDate());
-        offer.setImageUrl(object.getImageUrl());
-        offer.setTitle(object.getTitle());
-        offer.setIncludedCategories(object.getIncludedCategories());
-        return offer;
-    }
 
     @Override
     public void addProductToOffer(Long offerId, List<Long> productId) {
