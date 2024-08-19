@@ -60,4 +60,9 @@ public class ProductController {
         System.out.println(object.getJSONArray("categories"));
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(productService.updateProduct(id, object, file));
     }
+
+    @GetMapping("/title={title}")
+    public ResponseEntity<List<Product>> getByName(@PathVariable String title) {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getProductByName(title));
+    }
 }

@@ -1,6 +1,5 @@
 package com.panfleto.panfleto.services.product;
 
-import com.panfleto.panfleto.DTOs.ProductDto;
 import com.panfleto.panfleto.entities.Product;
 import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,5 +17,7 @@ public interface ProductService {
     Product updateProduct(Long id, JSONObject object, MultipartFile file);
 
     Product createProduct(Product product);
+
+    List<Product> getProductByName(String title);
 
 }

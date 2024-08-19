@@ -1,6 +1,5 @@
 package com.panfleto.panfleto.services.product;
 
-import com.panfleto.panfleto.DTOs.ProductDto;
 import com.panfleto.panfleto.entities.Product;
 import com.panfleto.panfleto.repositories.ProductRepository;
 import org.json.JSONObject;
@@ -50,6 +49,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product createProduct(Product product) {
         return productRepository.save(product);
+    }
+
+    @Override
+    public List<Product> getProductByName(String title) {
+        return productRepository.findByNameIsContainingIgnoreCase(title);
     }
 
 }

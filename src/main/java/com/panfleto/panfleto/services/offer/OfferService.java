@@ -16,4 +16,6 @@ public interface OfferService {
     void deleteOffer(Long marketId, Long offerId);
 
     Offer offerFromDto(OfferDto object);
+
+
 }
