@@ -41,7 +41,7 @@ public class MarketController {
 
         String url = s3.uploadObject("supermarket-images", object.get("name").toString(), file);
 
-        Market market = marketFromJsonObject(object, workingDaysList, url);
+        Market market = new Market(object, workingDaysList, url);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(marketService.addMarket(market));
     }
@@ -50,16 +50,6 @@ public class MarketController {
     public ResponseEntity<Void> deleteMarket(@PathVariable Long id) {
         marketService.deleteMarket(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    private static Market marketFromJsonObject(JSONObject object, List<WorkingDays> workingDaysList, String url) {
-        Market market = new Market();
-
-        market.setName(object.getString("name"));
-        market.setAddress(object.getString("address"));
-        market.setWorkingDays(workingDaysList);
-        market.setImgUrl(url);
-        return market;
     }
 
 

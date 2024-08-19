@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -43,6 +44,13 @@ public class Market {
                 break;
             }
         }
+    }
+
+    public Market(JSONObject object, List<WorkingDays> workingDaysList, String url) {
+        this.setName(object.getString("name"));
+        this.setAddress(object.getString("address"));
+        this.setWorkingDays(workingDaysList);
+        this.setImgUrl(url);
     }
 
 }
