@@ -1,6 +1,4 @@
 package com.panfleto.panfleto.DTOs;
-
-import com.panfleto.panfleto.entities.Product;
 import com.panfleto.panfleto.enums.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -19,15 +17,10 @@ public class OfferDto {
 
     private String description;
 
-    private String imageUrl;
-
     private Long marketId;
 
     @OneToMany
     private List<Category> includedCategories;
-
-    @OneToMany
-    private List<Product> products;
 
     @NotNull
     private LocalDate startDate;

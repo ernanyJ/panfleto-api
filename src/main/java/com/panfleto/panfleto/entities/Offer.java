@@ -32,7 +32,7 @@ public class Offer {
     private List<Category> includedCategories;
 
     @OneToMany
-    private List<Product> products;
+    private List<UniqueProduct> products;
 
     private LocalDate startDate;
 
@@ -43,7 +43,6 @@ public class Offer {
         this.setStartDate(object.getStartDate());
         this.setDescription(object.getDescription());
         this.setEndDate(object.getEndDate());
-        this.setImageUrl(object.getImageUrl());
         this.setTitle(object.getTitle());
         this.setIncludedCategories(object.getIncludedCategories());
     }
@@ -52,7 +51,8 @@ public class Offer {
 
     }
 
-    public void addProduct(Product product) {
+    public void addProduct(UniqueProduct product) {
         this.products.add(product);
     }
+
 }

@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "products")
 public class Product {
 
     @Id
@@ -29,11 +28,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private List<Category> categories;
 
-    private double price;
-
     public Product(JSONObject object) {
         this.setName(object.getString("name"));
-        this.setPrice(object.getDouble("price"));
         JSONArray categories = object.getJSONArray("categories");
         this.categories = new ArrayList<>();
 
@@ -45,7 +41,6 @@ public class Product {
 
     public Product(ProductDto object) {
         this.setName(object.getName());
-        this.setPrice(object.getPrice());
         this.setImgUrl(object.getImgurl());
         List<Category> list = object.getCategories();
         this.categories = new ArrayList<>();

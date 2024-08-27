@@ -15,6 +15,6 @@ public interface OfferService {
 
     void deleteOffer(Long marketId, Long offerId);
 
-    void addProductToOffer(Long offerId, List<Long> productId);
+    void addProductToOffer(Long offerId, Long productId, double price);
 
 }

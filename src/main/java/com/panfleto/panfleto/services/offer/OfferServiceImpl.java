@@ -1,10 +1,12 @@
 package com.panfleto.panfleto.services.offer;
 
 
-import com.panfleto.panfleto.DTOs.OfferDto;
 import com.panfleto.panfleto.entities.Offer;
+import com.panfleto.panfleto.entities.Product;
+import com.panfleto.panfleto.entities.UniqueProduct;
 import com.panfleto.panfleto.repositories.OfferRepository;
 import com.panfleto.panfleto.repositories.ProductRepository;
+import com.panfleto.panfleto.repositories.UniqueProductRepository;
 import com.panfleto.panfleto.services.market.MarketService;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,13 @@ public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private final MarketService marketService;
     private final ProductRepository productRepository;
+    private final UniqueProductRepository uniqueProductRepository;
 
-    public OfferServiceImpl(OfferRepository offerRepository, MarketService marketService, ProductRepository productRepository) {
+    public OfferServiceImpl(OfferRepository offerRepository, MarketService marketService, ProductRepository productRepository, UniqueProductRepository uniqueProductRepository) {
         this.offerRepository = offerRepository;
         this.marketService = marketService;
         this.productRepository = productRepository;
+        this.uniqueProductRepository = uniqueProductRepository;
     }
 
     @Override
@@ -56,11 +60,19 @@ public class OfferServiceImpl implements OfferService {
         offerRepository.deleteById(offerID);
     }
 
-
     @Override
-    public void addProductToOffer(Long offerId, List<Long> productId) {
-        Offer offer = getOfferById(offerId);
-        productId.forEach(id -> offer.addProduct(productRepository.findById(id).orElse(null)));
+    public void addProductToOffer(Long offerId, Long productId, double price) {
+
+        Offer offer = offerRepository.getReferenceById(offerId);
+        Product product = productRepository.getReferenceById(productId);
+
+        UniqueProduct uniqueProduct = (new UniqueProduct(product, offer, price));
+
+        uniqueProductRepository.save(uniqueProduct);
+
+        offer.addProduct(uniqueProduct);
         offerRepository.save(offer);
+
     }
+
 }

@@ -1,9 +1,11 @@
 package com.panfleto.panfleto.controllers;
 
 import com.panfleto.panfleto.DTOs.OfferDto;
+import com.panfleto.panfleto.DTOs.UniqueProductDto;
 import com.panfleto.panfleto.entities.Offer;
 import com.panfleto.panfleto.services.market.MarketService;
 import com.panfleto.panfleto.services.offer.OfferService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,11 +48,18 @@ public class OfferController {
         return ResponseEntity.ok().body(offerService.updateOffer(id, offer));
     }
 
-    @PutMapping("/addProduct/{offerId}")
-    public ResponseEntity<Void> addProductToOffer(@PathVariable Long offerId, @RequestBody List<Long> productsId) {
+    @PutMapping("{offerId}/add")
+    public ResponseEntity<String> addProductToOffer(@RequestBody UniqueProductDto object, @PathVariable Long offerId) {
 
-        offerService.addProductToOffer(offerId, productsId);
-        return ResponseEntity.noContent().build();
+        // TODO remover logs
+        System.out.println("Entrou no addProductToOffer controller");
+        System.out.println("product id: " + object.getProductId());
+        System.out.println("price: " + object.getPrice());
+        System.out.println("offer id: " + offerId);
+
+
+        offerService.addProductToOffer(offerId, object.getProductId(), object.getPrice());
+        return ResponseEntity.status(HttpStatus.CREATED).body("Produto adicionado com sucesso.");
     }
 
 }
