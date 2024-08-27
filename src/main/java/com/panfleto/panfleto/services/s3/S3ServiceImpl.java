@@ -19,7 +19,6 @@ import static com.panfleto.panfleto.utils.MultipartToFile.convertMultipartFileTo
 
 
 @Service
-@Profile("prod")
 public class S3ServiceImpl implements S3Service {
 
     final S3ClientConfig s3ClientConfig;

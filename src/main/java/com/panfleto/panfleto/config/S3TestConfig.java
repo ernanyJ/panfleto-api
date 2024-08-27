@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 
 @Configuration
 @Profile("test")
-public class TestConfig {
+public class S3TestConfig {
 
     @Bean
     public S3Service s3Service() {
