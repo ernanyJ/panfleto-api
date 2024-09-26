@@ -34,6 +34,15 @@ public class MarketController {
         return ResponseEntity.status(HttpStatus.OK).body(marketService.getMarkets());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Market> getMarketById(@PathVariable Long id) {
+
+        var opt = marketService.getMarket(id);
+
+        return opt.map(market -> ResponseEntity.status(HttpStatus.OK).body(market)).orElseGet(() -> ResponseEntity.notFound().build());
+
+    }
+
     @PostMapping
     public ResponseEntity<Market> createMarket(@RequestParam JSONObject object, @RequestParam MultipartFile file) {
 

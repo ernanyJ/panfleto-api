@@ -6,6 +6,7 @@ import com.panfleto.panfleto.repositories.MarketRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MarketServiceImpl implements MarketService {
@@ -22,8 +23,8 @@ public class MarketServiceImpl implements MarketService {
     }
 
     @Override
-    public Market getMarket(Long id) {
-        return marketRepository.getReferenceById(id);
+    public Optional<Market> getMarket(Long id) {
+        return marketRepository.findById(id);
     }
 
     @Override

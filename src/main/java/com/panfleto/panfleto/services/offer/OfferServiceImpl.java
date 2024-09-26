@@ -55,7 +55,7 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void deleteOffer(Long marketId, Long offerID) {
-        marketService.getMarket(marketId).removeOffer(offerID);
+        marketService.getMarket(marketId).get().removeOffer(offerID);
 
         offerRepository.deleteById(offerID);
     }

@@ -5,11 +5,12 @@ import com.panfleto.panfleto.entities.Market;
 import com.panfleto.panfleto.entities.Offer;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MarketService {
     List<Market> getMarkets();
 
-    Market getMarket(Long id);
+    Optional<Market> getMarket(Long id);
 
     Market addMarket(Market market);
 
