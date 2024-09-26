@@ -2,6 +2,7 @@ package com.panfleto.panfleto.services.product;
 
 import com.panfleto.panfleto.entities.Product;
 import com.panfleto.panfleto.repositories.ProductRepository;
+import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(Product product) {
+        product.setNormalizedName(product.getName().toLowerCase().replaceAll("\\s+", ""));
         return productRepository.save(product);
     }
 
@@ -55,5 +57,19 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getProductByName(String title) {
         return productRepository.findByNameIsContainingIgnoreCase(title);
     }
+
+    @Override
+    public Optional<Product> searchSimilarProducts(String title) {
+        LevenshteinDistance levenshteinDistance = new LevenshteinDistance();
+        List<Product> products = productRepository.findAll();
+        for(Product p : products){
+            if(levenshteinDistance.apply(p.getNormalizedName(), title) < 3){
+                return Optional.of(p);
+            }
+        }
+
+        return Optional.empty();
+    }
+
 
 }

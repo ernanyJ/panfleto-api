@@ -24,6 +24,8 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
+    private String normalizedName;
+
     @ElementCollection(targetClass = Category.class)
     @Enumerated(EnumType.STRING)
     private List<Category> categories;

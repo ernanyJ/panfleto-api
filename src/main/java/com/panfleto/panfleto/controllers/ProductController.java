@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/product")
@@ -58,5 +59,15 @@ public class ProductController {
     @GetMapping("/title={title}")
     public ResponseEntity<List<Product>> getByName(@PathVariable String title) {
         return ResponseEntity.status(HttpStatus.OK).body(productService.getProductByName(title));
+    }
+
+    @GetMapping("/similar")
+    public ResponseEntity<Product> searchSimilarProducts(@RequestParam String title) {
+
+        if (productService.searchSimilarProducts(title).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        return ResponseEntity.ok().body(productService.searchSimilarProducts(title).get());
     }
 }
