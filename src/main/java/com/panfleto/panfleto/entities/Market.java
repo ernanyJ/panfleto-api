@@ -27,20 +27,20 @@ public class Market {
 
     private String imgUrl;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     List<WorkingDays> workingDays;
 
     @OneToMany(orphanRemoval = true, mappedBy = "market")
-    List<Offer> offers;
+    List<Flyer> flyers;
 
-    public void addOffers(Offer offer) {
-        this.offers.add(offer);
+    public void addFlyer(Flyer flyer) {
+        this.flyers.add(flyer);
     }
 
-    public void removeOffer(Long id) {
-        for (Offer offer : offers) {
-            if (offer.getId().equals(id)) {
-                offers.remove(offer);
+    public void removeFlyer(Long id) {
+        for (Flyer flyer : flyers) {
+            if (flyer.getId().equals(id)) {
+                flyers.remove(flyer);
                 break;
             }
         }

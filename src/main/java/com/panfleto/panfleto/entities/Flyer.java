@@ -1,7 +1,7 @@
 package com.panfleto.panfleto.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.panfleto.panfleto.DTOs.OfferDto;
+import com.panfleto.panfleto.DTOs.FlyerDto;
 import com.panfleto.panfleto.enums.Category;
 import com.panfleto.panfleto.services.market.MarketService;
 import jakarta.persistence.*;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Offer {
+public class Flyer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,18 +27,19 @@ public class Offer {
     @JsonIgnore
     private Market market;
 
+    @OneToMany
+    List<Product> products;
+
     @ElementCollection(targetClass = Category.class)
     @Enumerated(EnumType.STRING)
     private List<Category> includedCategories;
 
-    @OneToMany
-    private List<UniqueProduct> products;
 
     private LocalDate startDate;
 
     private LocalDate endDate;
 
-    public Offer(OfferDto object, MarketService marketService) {
+    public Flyer(FlyerDto object, MarketService marketService) {
         this.setMarket(marketService.getMarket(object.getMarketId()).get());
         this.setStartDate(object.getStartDate());
         this.setDescription(object.getDescription());
@@ -47,12 +48,8 @@ public class Offer {
         this.setIncludedCategories(object.getIncludedCategories());
     }
 
-    public Offer() {
+    public Flyer() {
 
-    }
-
-    public void addProduct(UniqueProduct product) {
-        this.products.add(product);
     }
 
 }

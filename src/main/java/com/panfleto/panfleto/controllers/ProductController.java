@@ -46,7 +46,6 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@RequestParam JSONObject object, MultipartFile file) {
         Product product = new Product(object);
         String url = s3.uploadObject("products-images", object.getString("name"), file);
-        product.setImgUrl(url);
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(product));
     }
 

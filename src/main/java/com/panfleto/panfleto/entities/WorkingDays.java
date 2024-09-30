@@ -19,3 +19,4 @@ public class WorkingDays {
     private LocalTime openingTime;
     private LocalTime closingTime;
 }
+

@@ -1,4 +1,5 @@
 package com.panfleto.panfleto.DTOs;
+import com.panfleto.panfleto.entities.Product;
 import com.panfleto.panfleto.enums.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class OfferDto {
+public class FlyerDto {
 
     @NotNull
     @NotEmpty
@@ -17,14 +18,17 @@ public class OfferDto {
 
     private String description;
 
+    @NotNull
+    @NotEmpty
     private Long marketId;
 
     @OneToMany
     private List<Category> includedCategories;
 
-    @NotNull
     private LocalDate startDate;
 
-    @NotNull
     private LocalDate endDate;
+
+    @OneToMany
+    List<Product> products;
 }

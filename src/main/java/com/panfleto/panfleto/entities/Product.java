@@ -19,8 +19,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String imgUrl;
-
     @Column(nullable = false)
     private String name;
 
@@ -43,7 +41,6 @@ public class Product {
 
     public Product(ProductDto object) {
         this.setName(object.getName());
-        this.setImgUrl(object.getImgurl());
         List<Category> list = object.getCategories();
         this.categories = new ArrayList<>();
 

@@ -1,7 +1,7 @@
 package com.panfleto.panfleto.services.market;
 
 import com.panfleto.panfleto.entities.Market;
-import com.panfleto.panfleto.entities.Offer;
+import com.panfleto.panfleto.entities.Flyer;
 import com.panfleto.panfleto.repositories.MarketRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class MarketServiceImpl implements MarketService {
        return marketRepository.save(market);
     }
 
-    public void addOffer(Offer offer) {
+    public void addOffer(Flyer flyer) {
 //        marketRepository.save(new );
     }
 
@@ -46,13 +46,13 @@ public class MarketServiceImpl implements MarketService {
         marketRepository.save(market);
     }
 
-    public void addOffer(Long id, Offer offer){
-        marketRepository.getReferenceById(id).addOffers(offer);
+    public void addOffer(Long id, Flyer flyer){
+        marketRepository.getReferenceById(id).addFlyer(flyer);
     }
 
     @Override
     public void removeOffer(Long marketId, Long offerId) {
-      marketRepository.getReferenceById(marketId).removeOffer(offerId);
+      marketRepository.getReferenceById(marketId).removeFlyer(offerId);
     }
 
     @Override
