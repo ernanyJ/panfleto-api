@@ -25,9 +25,9 @@ public class OfferController {
 
 
     @PostMapping
-    public void createOffer(@RequestBody OfferDto object) {
-        Offer offer = new Offer(object, marketService);
-        marketService.addOffer(object.getMarketId(), offer);
+    public void createOffer(@RequestBody OfferDto object, @RequestParam Long market) {
+        Offer offer = new Offer(object, market, marketService);
+        marketService.addOffer(market, offer);
         offerService.createOffer(offer);
     }
 
@@ -43,8 +43,8 @@ public class OfferController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Offer> updateOffer(@PathVariable Long id, @RequestBody OfferDto object) {
-        Offer offer = new Offer(object, marketService);
+    public ResponseEntity<Offer> updateOffer(@PathVariable Long id, @RequestParam Long market, @RequestBody OfferDto object) {
+        Offer offer = new Offer(object, market, marketService);
         return ResponseEntity.ok().body(offerService.updateOffer(id, offer));
     }
 

@@ -38,8 +38,8 @@ public class Offer {
 
     private LocalDate endDate;
 
-    public Offer(OfferDto object, MarketService marketService) {
-        this.setMarket(marketService.getMarket(object.getMarketId()).get());
+    public Offer(OfferDto object, Long marketId, MarketService marketService) {
+        this.setMarket(marketService.getMarket(marketId).get());
         this.setStartDate(object.getStartDate());
         this.setDescription(object.getDescription());
         this.setEndDate(object.getEndDate());
