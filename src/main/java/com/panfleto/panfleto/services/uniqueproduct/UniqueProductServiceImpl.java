@@ -20,4 +20,14 @@ public class UniqueProductServiceImpl implements UniqueProductService {
     public List<UniqueProduct> getAllProducts() {
         return repository.findAll();
     }
+
+    @Override
+    public List<UniqueProduct> getUniqueProductsLike(String query) {
+        return repository.findByProductNameContainingIgnoreCase(query);
+    }
+
+    @Override
+    public List<UniqueProduct> getUniqueProductsByMarketId(Long marketId) {
+        return repository.findAllUniqueProductsByMarketId(marketId);
+    }
 }

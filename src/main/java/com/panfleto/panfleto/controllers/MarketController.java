@@ -1,7 +1,6 @@
 package com.panfleto.panfleto.controllers;
 
 import com.panfleto.panfleto.entities.Market;
-import com.panfleto.panfleto.entities.WorkingDays;
 import com.panfleto.panfleto.repositories.MarketRepository;
 import com.panfleto.panfleto.services.market.MarketService;
 import com.panfleto.panfleto.services.s3.S3Service;
@@ -46,11 +45,9 @@ public class MarketController {
     @PostMapping
     public ResponseEntity<Market> createMarket(@RequestParam JSONObject object, @RequestParam MultipartFile file) {
 
-        List<WorkingDays> workingDaysList = getWorkingDaysList(object);
-
         String url = s3.uploadObject("supermarket-images", object.get("name").toString(), file);
 
-        Market market = new Market(object, workingDaysList, url);
+        Market market = new Market(object, url);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(marketService.addMarket(market));
     }
@@ -61,39 +58,5 @@ public class MarketController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-
-    private static List<WorkingDays> getWorkingDaysList(JSONObject object) {
-
-        List<WorkingDays> workingDaysList = new ArrayList<>();
-
-        JSONArray jsonWorkingDaysARRAY = object.getJSONArray("workingDays");
-
-        for (int i = 0; i < jsonWorkingDaysARRAY.length(); i++) {
-
-            JSONObject currentDay = jsonWorkingDaysARRAY.getJSONObject(i);
-
-            String weekDay = currentDay.getString("weekDay");
-            String openingTime = currentDay.getString("openingTime");
-            String closingTime = currentDay.getString("closingTime");
-
-            WorkingDays tempDay = new WorkingDays();
-
-            if (!weekDay.isEmpty()) {
-                tempDay.setWeekDay(DaysOfWeek.valueOf(weekDay));
-            }
-
-            if (!openingTime.isEmpty()) {
-                tempDay.setOpeningTime(LocalTime.parse(openingTime));
-            }
-
-            if (!closingTime.isEmpty()) {
-                tempDay.setClosingTime(LocalTime.parse(closingTime));
-            }
-
-            workingDaysList.add(tempDay);
-
-        }
-        return workingDaysList;
-    }
 
 }

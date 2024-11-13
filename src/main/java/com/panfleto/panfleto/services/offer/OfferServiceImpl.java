@@ -1,9 +1,11 @@
 package com.panfleto.panfleto.services.offer;
 
 
+import com.panfleto.panfleto.DTOs.OfferDto;
 import com.panfleto.panfleto.entities.Offer;
 import com.panfleto.panfleto.entities.Product;
 import com.panfleto.panfleto.entities.UniqueProduct;
+import com.panfleto.panfleto.exceptions.EntidadeNaoEncontrada;
 import com.panfleto.panfleto.repositories.OfferRepository;
 import com.panfleto.panfleto.repositories.ProductRepository;
 import com.panfleto.panfleto.repositories.UniqueProductRepository;
@@ -45,33 +47,37 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public Offer updateOffer(Long id, Offer offer) {
-        if (offerRepository.existsById(id)) {
-            offer.setId(id);
-            return offerRepository.save(offer);
-        }
-        return null;
+    public Offer updateOffer(Long id, OfferDto offer) {
+        Offer reference = offerRepository.getReferenceById(id) ;
+        reference.setTitle(offer.getTitle());
+        offer.setMarketId(marketService.findMarketByOfferId(id).orElseThrow().getId());
+        reference.setDescription(offer.getDescription());
+        reference.setEndDate(offer.getEndDate());
+        reference.setStartDate(offer.getStartDate());
+            return offerRepository.save(reference);
     }
 
     @Override
-    public void deleteOffer(Long marketId, Long offerID) {
-        marketService.getMarket(marketId).get().removeOffer(offerID);
-
+    public void deleteOffer(Long offerID) {
         offerRepository.deleteById(offerID);
     }
 
     @Override
     public void addProductToOffer(Long offerId, Long productId, double price) {
 
-        Offer offer = offerRepository.getReferenceById(offerId);
-        Product product = productRepository.getReferenceById(productId);
+        Optional<Offer> offer = offerRepository.findById(offerId);
+        Optional<Product> product = productRepository.findById(productId);
 
-        UniqueProduct uniqueProduct = (new UniqueProduct(product, offer, price));
+        if(product.isEmpty() || offer.isEmpty()){
+            throw new EntidadeNaoEncontrada("This offer or product not exists.");
+        }
+
+        UniqueProduct uniqueProduct = (new UniqueProduct(product.get(), offer.get(), price));
 
         uniqueProductRepository.save(uniqueProduct);
 
-        offer.addProduct(uniqueProduct);
-        offerRepository.save(offer);
+        offer.get().addProduct(uniqueProduct);
+        offerRepository.save(offer.get());
 
     }
 

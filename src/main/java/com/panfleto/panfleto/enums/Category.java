@@ -2,6 +2,12 @@ package com.panfleto.panfleto.enums;
 
 public enum Category {
         HYGIENE,
-        FOOD,
-        ELECTRONICS
+        REFRIGERATED,
+        MEAT,
+        FRUITS,
+        VEGETABLES,
+        BAKERY,
+        ELECTRONICS,
+        BEVERAGES,
+        STAPLES,
 }

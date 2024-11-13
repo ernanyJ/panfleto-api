@@ -1,5 +1,6 @@
 package com.panfleto.panfleto.services.offer;
 
+import com.panfleto.panfleto.DTOs.OfferDto;
 import com.panfleto.panfleto.entities.Offer;
 
 import java.util.List;
@@ -11,9 +12,9 @@ public interface OfferService {
 
     Offer createOffer(Offer offer);
 
-    Offer updateOffer(Long id, Offer offer);
+    Offer updateOffer(Long id, OfferDto object);
 
-    void deleteOffer(Long marketId, Long offerId);
+    void deleteOffer(Long offerId);
 
     void addProductToOffer(Long offerId, Long productId, double price);
 

@@ -6,6 +6,8 @@ import com.panfleto.panfleto.enums.Category;
 import com.panfleto.panfleto.services.market.MarketService;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,6 +34,7 @@ public class Offer {
     private List<Category> includedCategories;
 
     @OneToMany
+    @Cascade(CascadeType.DELETE_ORPHAN)
     private List<UniqueProduct> products;
 
     private LocalDate startDate;

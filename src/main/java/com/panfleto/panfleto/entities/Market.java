@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.json.JSONObject;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -22,34 +23,83 @@ public class Market {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String address;
-
     private String imgUrl;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    List<WorkingDays> workingDays;
+    private LocalTime openingTimeMonday;
+    private LocalTime closingTimeMonday;
+
+    private LocalTime openingTimeTuesday;
+    private LocalTime closingTimeTuesday;
+
+    private LocalTime openingTimeWednesday;
+    private LocalTime closingTimeWednesday;
+
+    private LocalTime openingTimeThursday;
+    private LocalTime closingTimeThursday;
+
+    private LocalTime openingTimeFriday;
+    private LocalTime closingTimeFriday;
+
+    private LocalTime openingTimeSaturday;
+    private LocalTime closingTimeSaturday;
+
+    private LocalTime openingTimeSunday;
+    private LocalTime closingTimeSunday;
+
+    private String latitude;
+
+    private String longitude;
 
     @OneToMany(orphanRemoval = true, mappedBy = "market")
     List<Offer> offers;
 
-    public void addOffers(Offer offer) {
-        this.offers.add(offer);
-    }
-
-    public void removeOffer(Long id) {
-        for (Offer offer : offers) {
-            if (offer.getId().equals(id)) {
-                offers.remove(offer);
-                break;
-            }
-        }
-    }
-
-    public Market(JSONObject object, List<WorkingDays> workingDaysList, String url) {
+    public Market(JSONObject object, String url) {
         this.setName(object.getString("name"));
-        this.setAddress(object.getString("address"));
-        this.setWorkingDays(workingDaysList);
+        if(object.has("openingTimeMonday")){
+            this.setOpeningTimeMonday(LocalTime.parse(object.getString("openingTimeMonday")));
+        }
+        if(object.has("closingTimeMonday")){
+            this.setClosingTimeMonday(LocalTime.parse(object.getString("closingTimeMonday")));
+        }
+        if(object.has("openingTimeTuesday")){
+            this.setOpeningTimeTuesday(LocalTime.parse(object.getString("openingTimeTuesday")));
+        }
+        if(object.has("closingTimeTuesday")){
+            this.setClosingTimeTuesday(LocalTime.parse(object.getString("closingTimeTuesday")));
+        }
+        if(object.has("openingTimeWednesday")){
+            this.setOpeningTimeWednesday(LocalTime.parse(object.getString("openingTimeWednesday")));
+        }
+        if(object.has("closingTimeWednesday")){
+            this.setClosingTimeWednesday(LocalTime.parse(object.getString("closingTimeWednesday")));
+        }
+        if(object.has("openingTimeThursday")){
+            this.setOpeningTimeThursday(LocalTime.parse(object.getString("openingTimeThursday")));
+        }
+        if(object.has("closingTimeThursday")){
+            this.setClosingTimeThursday(LocalTime.parse(object.getString("closingTimeThursday")));
+        }
+        if(object.has("openingTimeFriday")){
+            this.setOpeningTimeFriday(LocalTime.parse(object.getString("openingTimeFriday")));
+        }
+        if(object.has("closingTimeFriday")){
+            this.setClosingTimeFriday(LocalTime.parse(object.getString("closingTimeFriday")));
+        }
+        if(object.has("openingTimeSaturday")){
+            this.setOpeningTimeSaturday(LocalTime.parse(object.getString("openingTimeSaturday")));
+        }
+        if(object.has("closingTimeSaturday")){
+            this.setClosingTimeSaturday(LocalTime.parse(object.getString("closingTimeSaturday")));
+        }
+        if(object.has("openingTimeSunday")){
+            this.setOpeningTimeSunday(LocalTime.parse(object.getString("openingTimeSunday")));
+        }
+        if(object.has("closingTimeSunday")){
+            this.setClosingTimeSunday(LocalTime.parse(object.getString("closingTimeSunday")));
+        }
+
+        this.setLatitude(object.getString("latitude"));
+        this.setLongitude(object.getString("longitude"));
         this.setImgUrl(url);
     }
 

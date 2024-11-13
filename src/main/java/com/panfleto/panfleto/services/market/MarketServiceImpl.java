@@ -28,6 +28,11 @@ public class MarketServiceImpl implements MarketService {
     }
 
     @Override
+    public Optional<Market> findMarketByOfferId(Long id) {
+        return Optional.of(marketRepository.findByOfferId(id).orElseThrow());
+    }
+
+    @Override
     public Market addMarket(Market market) {
        return marketRepository.save(market);
     }
@@ -41,18 +46,18 @@ public class MarketServiceImpl implements MarketService {
         System.out.println("CURRENT MARKET =>" + market);
         Market tempMarket = marketRepository.getReferenceById(market.getId());
         tempMarket.setName(market.getName());
-        tempMarket.setAddress(market.getAddress());
         tempMarket.setImgUrl(market.getImgUrl());
         marketRepository.save(market);
     }
 
     public void addOffer(Long id, Offer offer){
-        marketRepository.getReferenceById(id).addOffers(offer);
+
+        marketRepository.getReferenceById(id).getOffers().add(offer);
     }
 
     @Override
     public void removeOffer(Long marketId, Long offerId) {
-      marketRepository.getReferenceById(marketId).removeOffer(offerId);
+      marketRepository.getReferenceById(marketId).getOffers().removeIf(offer -> offer.getId().equals(offerId));
     }
 
     @Override
@@ -61,3 +66,4 @@ public class MarketServiceImpl implements MarketService {
     }
 
 }
+

@@ -3,8 +3,11 @@ package com.panfleto.panfleto.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.panfleto.panfleto.enums.Category;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -51,6 +54,16 @@ public class UniqueProduct {
     @JsonProperty("image")
     public String getImageUrl() {
         return product.getImgUrl();
+    }
+
+    @JsonProperty("marketId")
+    public Long getMarketName() {
+        return offer.getMarket().getId();
+    }
+
+    @JsonProperty("productCategories")
+    public List<Category> getCategory() {
+        return product.getCategories();
     }
 
 

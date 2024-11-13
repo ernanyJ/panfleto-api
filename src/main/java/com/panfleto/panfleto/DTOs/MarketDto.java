@@ -1,6 +1,5 @@
 package com.panfleto.panfleto.DTOs;
 
-import com.panfleto.panfleto.entities.WorkingDays;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +13,5 @@ public class MarketDto {
     private String address;
 
     private MultipartFile image;
-
-    List<WorkingDays> workingDays;
 
 }

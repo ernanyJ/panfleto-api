@@ -3,6 +3,7 @@ package com.panfleto.panfleto.controllers;
 import com.panfleto.panfleto.DTOs.OfferDto;
 import com.panfleto.panfleto.DTOs.UniqueProductDto;
 import com.panfleto.panfleto.entities.Offer;
+import com.panfleto.panfleto.exceptions.EntidadeNaoEncontrada;
 import com.panfleto.panfleto.services.market.MarketService;
 import com.panfleto.panfleto.services.offer.OfferService;
 import org.springframework.http.HttpStatus;
@@ -36,29 +37,24 @@ public class OfferController {
         return ResponseEntity.ok().body(offerService.getAllOffers());
     }
 
-    @DeleteMapping("/{marketId}/{offerId}")
-    public ResponseEntity<Void> deleteOffer(@PathVariable Long marketId, @PathVariable Long offerId) {
-        offerService.deleteOffer(marketId, offerId);
+    @DeleteMapping("/{offerId}")
+    public ResponseEntity<Void> deleteOffer(@PathVariable Long offerId) {
+        offerService.deleteOffer(offerId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Offer> updateOffer(@PathVariable Long id, @RequestParam Long market, @RequestBody OfferDto object) {
-        Offer offer = new Offer(object, market, marketService);
-        return ResponseEntity.ok().body(offerService.updateOffer(id, offer));
+    public ResponseEntity<Offer> updateOffer(@PathVariable Long id, @RequestBody OfferDto object) {
+        return ResponseEntity.ok().body(offerService.updateOffer(id, object));
     }
 
     @PutMapping("{offerId}/add")
     public ResponseEntity<String> addProductToOffer(@RequestBody UniqueProductDto object, @PathVariable Long offerId) {
-
-        // TODO remover logs
-        System.out.println("Entrou no addProductToOffer controller");
-        System.out.println("product id: " + object.getProductId());
-        System.out.println("price: " + object.getPrice());
-        System.out.println("offer id: " + offerId);
-
-
-        offerService.addProductToOffer(offerId, object.getProductId(), object.getPrice());
+        try {
+            offerService.addProductToOffer(offerId, object.getProductId(), object.getPrice());
+        } catch (EntidadeNaoEncontrada e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body("Produto adicionado com sucesso.");
     }
 

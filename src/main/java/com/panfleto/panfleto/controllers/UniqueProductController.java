@@ -1,10 +1,9 @@
 package com.panfleto.panfleto.controllers;
 
+import com.panfleto.panfleto.DTOs.UniqueProductOutDto;
 import com.panfleto.panfleto.entities.UniqueProduct;
 import com.panfleto.panfleto.services.uniqueproduct.UniqueProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +20,16 @@ public class UniqueProductController {
     @GetMapping
     List<UniqueProduct> getAllUniqueProducts(){
         return service.getAllProducts();
+    }
+
+    @GetMapping("/search")
+    List<UniqueProduct> getUniqueProductsByNameLike(@RequestParam String query){
+        return service.getUniqueProductsLike(query);
+    }
+
+    @GetMapping("/market/{marketId}")
+    List<UniqueProduct> getUniqueProductsByMarketId(@PathVariable Long marketId){
+        return service.getUniqueProductsByMarketId(marketId);
     }
 
 }

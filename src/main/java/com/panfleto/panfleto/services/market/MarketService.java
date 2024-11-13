@@ -12,6 +12,8 @@ public interface MarketService {
 
     Optional<Market> getMarket(Long id);
 
+    Optional<Market> findMarketByOfferId(Long id);
+
     Market addMarket(Market market);
 
     void updateMarket(Market market);
